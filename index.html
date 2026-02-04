@@ -344,7 +344,6 @@
   <header>
     <div class="wrap nav">
       <a class="brand" href="#top" aria-label="Tiny Trailblazers home">
-        <!-- Bear logo image -->
         <!-- Simple inline logo (bear reading with sleep mask) -->
         <svg width="44" height="44" viewBox="0 0 64 64" role="img" aria-label="Tiny Trailblazers logo" style="flex:0 0 auto">
           <defs>
@@ -462,8 +461,6 @@
       </div>
     </section>
 
-    
-
     <section id="the-problem">
       <div class="wrap">
         <div class="sectionHead">
@@ -544,7 +541,7 @@
           <div class="card" style="text-align:center">
             <div style="width:96px;height:96px;border-radius:50%;margin:0 auto 10px;background:linear-gradient(135deg,var(--pink),var(--yellow));display:flex;align-items:center;justify-content:center;font-size:32px">📅</div>
             <h4>Event Planning</h4>
-            <p><b>Sofiyyah, Emily &amp; Brankie</b><br/>Plan and deliver engaging school visits and events that bring stories to life.</p>
+            <p><b>Sofiyyah, Brankie &amp; Emily</b><br/>Plan and deliver engaging school visits and events that bring stories to life.</p>
           </div>
 
           <div class="card" style="text-align:center">
@@ -572,7 +569,7 @@
           </div>
         </div>
 
-        <p class="note" style="margin-top:16px"></p>
+        <p class="note" style="margin-top:16px">As we grow, we’ll introduce more of the people who help make Tiny Trailblazers possible.</p>
       </div>
     </section>
 
@@ -599,37 +596,10 @@
             <div class="priceTag">
               <div>
                 <b>Bundle price: <span id="bundlePrice">£12</span></b>
-                <div style="margin-top:2px"><span>Change this to your real price in the settings below.</span></div>
               </div>
             </div>
 
             <p class="note"></p>
-          </div>
-
-          <div class="card">
-            <h4>Quick settings</h4>
-            <p>.</p>
-            <div class="twoCol" style="margin-top:10px">
-              <div>
-                <label for="priceInput">Bundle price (display)</label>
-                <input id="priceInput" type="text" value="£12" />
-              </div>
-              <div>
-                <label for="ageInput">Age ranges available</label>
-                <input id="ageInput" type="text" value="4–6, 7–9, 10–12" />
-              </div>
-            </div>
-            <div style="margin-top:10px">
-              <label for="collectionInput">Collection / delivery note</label>
-              <input id="collectionInput" type="text" value="Local collection in the North East (or UK postage on request)." />
-            </div>
-
-            <div class="toast" id="settingsToast" role="status" aria-live="polite"></div>
-
-            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
-              <button class="btn secondary" type="button" id="saveSettings">Save settings</button>
-              <button class="btn" type="button" id="resetSettings" style="background:#fff; border:1px solid rgba(0,0,0,.10); box-shadow:none">Reset</button>
-            </div>
           </div>
         </div>
       </div>
@@ -671,7 +641,7 @@
               <li>Reading buddies + confidence games</li>
               <li>Donation drop-off points (books + supplies)</li>
             </ul>
-            <p class="note"></p>
+            <p class="note">Want to add a full events calendar? Ask and I’ll add a simple events page.</p>
           </div>
         </div>
       </div>
@@ -748,7 +718,7 @@
               <a class="btn" href="#the-problem" style="background:#fff; border:1px solid rgba(0,0,0,.10); box-shadow:none">Why literacy?</a>
             </div>
 
-            <p class="note">.</p>
+            <p class="note">Replace the address/charity details if you prefer not to display them publicly.</p>
           </div>
         </div>
       </div>
@@ -771,7 +741,7 @@
             </span>
           </div>
         </div>
-        <p style="margin:12px 0 0">© <span id="year"></span> Tiny Trailblazers. </p>
+        <p style="margin:12px 0 0">© <span id="year"></span> Tiny Trailblazers. Made with 🐾 + 📚</p>
       </div>
     </footer>
 
@@ -789,33 +759,13 @@
   </div>
 
   <script>
-    // Tiny Trailblazers — lightweight interactivity (no online ordering / donate / volunteer buttons)
+    // Tiny Trailblazers — lightweight interactivity
 
     const $ = (sel) => document.querySelector(sel);
 
     // Year
     const yearEl = $('#year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-    // Settings (bundle price + age ranges + collection note)
-    const defaults = {
-      price: '£4',
-      ages: '6-16',
-      collection: 'Newcastle High School for Girls.'
-    };
-
-    function loadSettings(){
-      const stored = JSON.parse(localStorage.getItem('tt_settings') || 'null');
-      const s = stored || defaults;
-      const priceEl = $('#bundlePrice');
-      if (priceEl) priceEl.textContent = s.price;
-      const pi = $('#priceInput');
-      const ai = $('#ageInput');
-      const ci = $('#collectionInput');
-      if (pi) pi.value = s.price;
-      if (ai) ai.value = s.ages;
-      if (ci) ci.value = s.collection;
-    }
 
     function toast(el, msg){
       if(!el) return;
@@ -824,32 +774,6 @@
       clearTimeout(el._t);
       el._t = setTimeout(() => el.style.display = 'none', 3200);
     }
-
-    const saveBtn = $('#saveSettings');
-    if (saveBtn) {
-      saveBtn.addEventListener('click', () => {
-        const s = {
-          price: ($('#priceInput')?.value || '').trim() || defaults.price,
-          ages: ($('#ageInput')?.value || '').trim() || defaults.ages,
-          collection: ($('#collectionInput')?.value || '').trim() || defaults.collection,
-        };
-        localStorage.setItem('tt_settings', JSON.stringify(s));
-        const priceEl = $('#bundlePrice');
-        if (priceEl) priceEl.textContent = s.price;
-        toast($('#settingsToast'), 'Saved! Your bundle details are updated on this device.');
-      });
-    }
-
-    const resetBtn = $('#resetSettings');
-    if (resetBtn) {
-      resetBtn.addEventListener('click', () => {
-        localStorage.removeItem('tt_settings');
-        loadSettings();
-        toast($('#settingsToast'), 'Reset to defaults.');
-      });
-    }
-
-    loadSettings();
 
     // Modal helpers
     const backdrop = $('#modalBackdrop');
@@ -915,11 +839,12 @@
       console.assert(!!$('#modalBackdrop'), 'Expected #modalBackdrop to exist');
       console.assert(!!$('#modalTitle'), 'Expected #modalTitle to exist');
       console.assert(!!$('#modalBody'), 'Expected #modalBody to exist');
+      console.assert(!!$('#closeModal'), 'Expected #closeModal to exist');
       console.assert(!!$('#bundlePrice'), 'Expected #bundlePrice to exist');
-      console.assert(!!$('#saveSettings'), 'Expected #saveSettings to exist');
-      console.assert(!!$('#resetSettings'), 'Expected #resetSettings to exist');
       console.assert(!!$('#contactForm'), 'Expected #contactForm to exist');
       console.assert(!!$('#openSponsor'), 'Expected #openSponsor to exist');
+      console.assert(typeof openModal === 'function', 'Expected openModal() to be a function');
+      console.assert(typeof closeModal === 'function', 'Expected closeModal() to be a function');
     }
     runSelfTests();
   </script>
